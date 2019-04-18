@@ -1,9 +1,9 @@
 {
-    "name": "imanghafoori/laravel-hyper-facades",
+    "name": "imanghafoori/laravel-smart-facades",
     "description": "Adds some features on the top of laravel facades",
     "keywords": ["laravel", "laravel5-package", "PHP", "laravel5", "laravel-facades"],
     "license": "MIT",
-    "homepage": "https://github.com/imanghafoori1/laravel-hyper-facades",
+    "homepage": "https://github.com/imanghafoori1/laravel-smart-facades",
     "authors": [
         {
             "name": "Iman Ghafoori",
@@ -12,21 +12,22 @@
     ],
     "require": {
         "php": ">=7.0.0",
+        "phpunit/phpunit": "~4.0",
         "illuminate/support":"~5.1"
     },
     "autoload-dev": {
-        "classmap": ["tests/TestCase.php"]
+        "classmap": ["tests/TestCase.php", "tests/stubs"],
+        "psr-4": {
+            "Imanghafoori\\FacadeTests\\": "tests/"
+        }
     },
     "require-dev": {
         "mockery/mockery": "^0.9.9"
     },
     "autoload": {
         "psr-4": {
-            "Imanghafoori\\HyperFacades\\": "src"
-        },
-        "files": [
-            "src/helpers.php"
-        ]
+            "Imanghafoori\\SmartFacades\\": "src"
+        }
     },
 	"suggest": {
         "imanghafoori/laravel-widgetize": "Gives you a better structure and caching opportunity for your web pages.",

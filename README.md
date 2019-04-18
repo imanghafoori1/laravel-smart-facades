@@ -1,33 +1,51 @@
-# Laravel  Hyper Facades :
+# Laravel Smart Facades :
 
 This package tries to add some features on the top of the current laravel's facade feature so you can get more advantages out of them.
 
 ### Automatic method injection when calling a method on a class through a facade.
 
-``` // web.php
-class A1 {}
-// ...
-class A2 {
-     
-     public function a2 (A1 $a1_obj) {
-         var_dump(get_class($a1_obj));    // prints:  A1
-     }
-}
+This adds ability to enjoy automatic method injection when calling methods on POPOs (Plain Old Php Objects) WITHOUT any performance hit when you do not need it.
 
-// Define a Hyper Facade
-class myHyperFacade extends HyperFacade {
+In fact, it only comes into play if there is any `TypeError` thrown from a Facade call, trying to handle it gracefully by providing injected dependencies right within the method input,
+and retry the method call once again. (in the catch block)
+And would be happy to know if something is missing...
 
-    public function getFacadeAccessor () {
-        return A2::class;
+Example :
+```php
+class Foo { ... }
+
+class Bar {
+    public function m1 (Foo $foo, LoggerInterface $logger, string $msg) {
+        //...
     }
 }
-
-
-// now lets use Hyper Facade to call `a2` method on A2 class.
-
-myHyperFacade::a2();     // prints A1
-
-
 ```
 
-As you can see `$a1_obj` was injected for us. (which is not the case with normal laravel facades)
+Calling `Bar` through a Facade :
+
+Before : 
+```php
+MyFacade::m1(resolve(Foo::class), resolve(LoggerInterface::class), 'hey there !'); 
+```
+
+After :
+```php
+ // This will work and $foo, $logger would be auto-injected for us.
+
+MyFacade::m1('hey there !');          // normal facade
+\Facades\Bar::m1('hey there !');     // real-time facade
+
+// or even :
+\Facades\Bar::m1(new Foo('hey man!'), 'hey there !'); //Now only the Logger is injected
+```
+
+and as always, 
+we may define the facade class like this:
+
+```php
+MyFacade extends Facade {
+    protected static function getFacadeAccessor () {
+        return Bar::class;
+    }
+}
+```
