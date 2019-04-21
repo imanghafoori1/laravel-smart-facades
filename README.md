@@ -1,5 +1,11 @@
 # Laravel Smart Facades :
 
+## Installation:
+
+```
+composer require imanghafoori/laravel-smart-facades
+```
+
 This package tries to add some features on the top of the current laravel's facade feature so you can get more advantages out of them.
 
 ### Automatic method injection when calling a method through a facade.
