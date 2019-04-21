@@ -33,16 +33,18 @@ After :
  // This will work and $foo, $logger would be auto-injected for us.
 
 MyFacade::m1('hey there !');          // normal facade
-\Facades\Bar::m1('hey there !');     // real-time facade
 
-// or even :
-\Facades\Bar::m1(new Foo('hey man!'), 'hey there !'); //Now only the Logger is injected
+// or you may want to provide some dependecies your self :
+\Facades\Bar::m1(new Foo('hey man!'), 'hey there !');   //Now only the Logger is injected
 ```
 
 and as always, 
 we may define the facade class like this:
 
 ```php
+
+use Imanghafoori\SmartFacades\Facade;
+
 MyFacade extends Facade {
     protected static function getFacadeAccessor () {
         return Bar::class;
