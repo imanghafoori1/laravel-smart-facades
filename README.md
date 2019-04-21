@@ -2,7 +2,7 @@
 
 This package tries to add some features on the top of the current laravel's facade feature so you can get more advantages out of them.
 
-### Automatic method injection when calling a method on a class through a facade.
+### Automatic method injection when calling a method through a facade.
 
 This adds ability to enjoy automatic method injection when calling methods on POPOs (Plain Old Php Objects) WITHOUT any performance hit when you do not need it.
 
