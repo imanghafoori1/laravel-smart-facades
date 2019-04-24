@@ -22,6 +22,9 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
     public function testItCanInjectForFirstParam()
     {
+        $this->assertEquals('def1', FacadeStub::m1(new FacadeStub1()));
+        $this->assertEquals('def1', FacadeStub::m1());
+        $this->assertEquals('def12', FacadeStub::m2('2'));
         $this->assertEquals('def1'.'ab'.'def3', FacadeStub::m3(new FacadeStub1(), 'ab'));
         $this->assertEquals('def1'.'bb'.'def3', FacadeStub::m3('bb'));
         $this->assertEquals('def1'.'bb'.'cc', FacadeStub::m3('bb', 'cc'));
