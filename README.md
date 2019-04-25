@@ -1,5 +1,7 @@
 # Laravel Smart Facades :
 
+[![Code Coverage](https://scrutinizer-ci.com/g/imanghafoori1/laravel-smart-facades/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/imanghafoori1/laravel-smart-facades/?branch=master)
+
 ## Installation:
 
 ```
