@@ -3,11 +3,7 @@
 namespace Imanghafoori\FacadeTests;
 
 use ArgumentCountError;
-use Imanghafoori\FacadeTests\Stubs\FacadeStub;
-use Imanghafoori\FacadeTests\Stubs\FacadeStub1;
-use Imanghafoori\FacadeTests\Stubs\FacadeStub2;
-use Imanghafoori\FacadeTests\Stubs\ApplicationStub;
-use Imanghafoori\FacadeTests\Stubs\ConcreteFacadeStub;
+use Imanghafoori\FacadeTests\Stubs\{FacadeStub, FacadeStub1, FacadeStub2, ApplicationStub, ConcreteFacadeStub};
 
 class TestCase extends \PHPUnit_Framework_TestCase
 {

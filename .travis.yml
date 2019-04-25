@@ -18,6 +18,8 @@ matrix:
       env: LARAVEL_VERSION=5.7.*
     - php: 7.3
       env: LARAVEL_VERSION=5.7.*
+    - php: 7.3.3
+      env: LARAVEL_VERSION=5.8.*
 
 before_install:
   - composer self-update --stable -n

@@ -31,9 +31,8 @@ class Facade extends LaravelFacade
             return $instance->$method(...$args);
         } catch (TypeError $error) {
             $params = (new ReflectionMethod($instance, $method))->getParameters();
-            $newArgs = self::addMissingDependencies($params, $args);
-
-            return $instance->$method(...$newArgs);
+            self::addMissingDependencies($params, $args);
+            return $instance->$method(...$args);
         }
     }
 
@@ -42,10 +41,8 @@ class Facade extends LaravelFacade
      *
      * @param ReflectionParameter[] $parameters
      * @param array $inputData
-     *
-     * @return array
      */
-    private static function addMissingDependencies($parameters, array $inputData)
+    private static function addMissingDependencies($parameters, array &$inputData)
     {
         foreach ($parameters as $i => $parameter) {
             $class = $parameter->getClass()->name ?? '';
@@ -53,7 +50,5 @@ class Facade extends LaravelFacade
                 array_splice($inputData, $i, 0, [self::$app[$class]]);
             }
         }
-
-        return $inputData;
     }
 }
