@@ -3,11 +3,11 @@
 namespace Imanghafoori\FacadeTests;
 
 use ArgumentCountError;
+use Imanghafoori\FacadeTests\Stubs\ApplicationStub;
+use Imanghafoori\FacadeTests\Stubs\ConcreteFacadeStub;
 use Imanghafoori\FacadeTests\Stubs\FacadeStub;
 use Imanghafoori\FacadeTests\Stubs\FacadeStub1;
 use Imanghafoori\FacadeTests\Stubs\FacadeStub2;
-use Imanghafoori\FacadeTests\Stubs\ApplicationStub;
-use Imanghafoori\FacadeTests\Stubs\ConcreteFacadeStub;
 
 class TestCase extends \PHPUnit_Framework_TestCase
 {
@@ -38,7 +38,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
         $this->assertEquals('abc'.FacadeStub1::class.'def3', FacadeStub::m5('abc'));
         $this->assertEquals('abc'.FacadeStub1::class.'def3', FacadeStub::m5('abc', new FacadeStub1()));
         $this->assertEquals('bb'.FacadeStub1::class.'cc', FacadeStub::m5('bb', 'cc'));
-        $this->assertEquals('bb'.FacadeStub1::class.'cc', FacadeStub::m5('bb', new FacadeStub1, 'cc'));
+        $this->assertEquals('bb'.FacadeStub1::class.'cc', FacadeStub::m5('bb', new FacadeStub1(), 'cc'));
     }
 
     public function testItCanInjectTwoDependencies()
@@ -54,9 +54,9 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $app = new ApplicationStub;
+        $app = new ApplicationStub();
         $app->setAttributes([
-            'foo' => new ConcreteFacadeStub,
+            'foo'              => new ConcreteFacadeStub(),
             FacadeStub1::class => new FacadeStub1(),
             FacadeStub2::class => new FacadeStub2(),
         ]);
