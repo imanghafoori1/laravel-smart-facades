@@ -45,9 +45,12 @@ class Facade extends LaravelFacade
     private static function addMissingDependencies($parameters, array &$inputData)
     {
         foreach ($parameters as $i => $parameter) {
-            $class = $parameter->getClass()->name ?? '';
-            if ($class && ! is_a($inputData[$i] ?? '', $class)) {
+            // Injects missing type hinted parameters within the array
+            $class = $parameter->getClass()->name ?? false;
+            if ($class && ! ($inputData[$i] ?? false) instanceof $class) {
                 array_splice($inputData, $i, 0, [self::$app[$class]]);
+            } elseif (! array_key_exists($i, $inputData) && $parameter->isDefaultValueAvailable()) {
+                $inputData[] = $parameter->getDefaultValue();
             }
         }
     }
