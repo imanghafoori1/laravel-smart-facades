@@ -34,6 +34,11 @@ class ConcreteFacadeStub
         return ($p1->a).($p2->b).$p3.$p4;
     }
 
+    public function m7(FacadeStub1 $p1, $p2, $p3 = 'default', FacadeStub2 $p4)
+    {
+        return ($p1->a).$p2.$p3.($p4->b);
+    }
+
     public function faulty(FacadeStub1 $p1)
     {
         $p1->method();

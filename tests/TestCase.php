@@ -48,6 +48,14 @@ class TestCase extends \PHPUnit_Framework_TestCase
         $this->assertEquals('def1'.'def2'.'x_y', FacadeStub::m6('x_', 'y'));
     }
 
+    public function testItCanInjectTwoDependencies2()
+    {
+        $this->assertEquals('def1'.'x_default'.'def2', FacadeStub::m7('x_'));
+        $this->assertEquals('val1'.'x_default'.'def2', FacadeStub::m7(new FacadeStub1('val1'),'x_'));
+        $this->assertEquals('val1'.'x_y'.'def2', FacadeStub::m7(new FacadeStub1('val1'),'x_', 'y'));
+        $this->assertEquals('val1'.'x_y'.'val2', FacadeStub::m7(new FacadeStub1('val1'),'x_', 'y', new FacadeStub2('val2')));
+    }
+
     public function setUp()
     {
         $app = new ApplicationStub;
