@@ -5,10 +5,36 @@ namespace Imanghafoori\SmartFacades;
 use TypeError;
 use ReflectionMethod;
 use RuntimeException;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Facade as LaravelFacade;
 
 class Facade extends LaravelFacade
 {
+    protected static function getFacadeAccessor()
+    {
+        return static::class;
+    }
+
+    static function shouldProxyTo($class)
+    {
+        static::$app->singleton(self::getFacadeAccessor(), $class);
+    }
+
+    public static function preCall(string $method, $listener)
+    {
+        $listener = self::makeListener($method, $listener);
+
+        Event::listen('calling: '. static::class.'@'. $method, $listener);
+    }
+
+    public static function postCall(string $method, $listener)
+    {
+        $listener = self::makeListener($method, $listener);
+
+        Event::listen('called: '. static::class.'@'. $method, $listener);
+    }
+
     /**
      * Handle dynamic, static calls to the object.
      *
@@ -28,7 +54,11 @@ class Facade extends LaravelFacade
         }
 
         try {
-            return $instance->$method(...$args);
+            event('calling: '. static::class.'@'. $method, [$method, $args]);
+            $result =  $instance->$method(...$args);
+            event('called: '. static::class.'@'. $method, [$result]);
+
+            return $result;
         } catch (TypeError $error) {
             $params = (new ReflectionMethod($instance, $method))->getParameters();
             self::addMissingDependencies($params, $args);
@@ -53,5 +83,23 @@ class Facade extends LaravelFacade
                 $inputData[] = $parameter->getDefaultValue();
             }
         }
+    }
+
+    private static function makeListener(string $method, $listener)
+    {
+        if (Str::contains($method, '*')) {
+            $listener = function ($_eventName, $methodAndArguments) use ($listener) {
+                static::$app->call($listener, $methodAndArguments);
+            };
+        } else {
+            $listener = function ($methodName, $args) use ($listener) {
+                static::$app->call($listener, [
+                    $methodName,
+                    $args
+                ]);
+            };
+        }
+
+        return $listener;
     }
 }
