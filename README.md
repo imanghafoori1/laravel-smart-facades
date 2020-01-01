@@ -63,6 +63,8 @@ MyFacade extends Facade
 
 #### After
 ```php
+use Imanghafoori\SmartFacades\Facade;
+
 MyFacade extends Facade
 {
     //
@@ -71,19 +73,27 @@ MyFacade extends Facade
 
 #### shouldProxyTo():
 
-You can choose the low level implementation class which is behind your facade like this :
+You can choose the low level implementation class, (so that the facades proxies the method calls to it)
 
+like this:
 ```php
-MyFacade::shouldProxyTo( SomeClass1::class ); // Within a service provider.
+   // Normally, within a service provider.
+if ($someCondition) {
+    MyFacade::shouldProxyTo( SomeClass::class );
+} else {
+    MyFacade::shouldProxyTo( SomeOtherClass::class );
+}
 ```
 
-Note : if you invoke it again, it will be overriden:
+Note : if you invoke it twice, it will be override:
 ```php
 MyFacade::shouldProxyTo( SomeClass1::class );
 MyFacade::shouldProxyTo( SomeClass2::class ); // This wins !!
 ```
 
 #### Method Hooks:
-You can introduce some code (like event listeners on eloquent models) before and after a method on a facade is called :
+You can introduce some code (like event listeners on eloquent models) "before" and "after" a method call, remotely:
 
-![image](https://user-images.githubusercontent.com/6961695/71644014-c9e3e280-2cd6-11ea-8ebb-38009f6e45cf.png)
+![image](https://user-images.githubusercontent.com/6961695/71646327-f100db00-2cfb-11ea-9277-1271395efca0.png)
+
+Here we have told the system even ever the 'findUser' method was called in the system, perform a log.
