@@ -16,17 +16,16 @@ This package tries to add some features on the top of the current laravel's faca
 
 This adds ability to enjoy automatic method injection when calling methods on POPOs (Plain Old Php Objects) WITHOUT any performance hit when you do not need it.
 
-In fact, it only comes into play if there is any `TypeError` thrown from a Facade call, trying to handle it gracefully by providing injected dependencies right within the method input,
-and retry the method call once again. (in the catch block)
-And would be happy to know if something is missing...
-
 Example :
 ```php
 class Foo { ... }
 
-class Bar {
-    public function m1 (Foo $foo, LoggerInterface $logger, string $msg) {
-        //...
+class Bar
+{
+    // This has dependencies: "Foo", "LoggerInterface"
+    public function m1 (Foo $foo, LoggerInterface $logger, string $msg)
+    {
+       
     }
 }
 ```
@@ -48,16 +47,43 @@ MyFacade::m1('hey there !');          // normal facade
 \Facades\Bar::m1(new Foo('hey man!'), 'hey there !');   //Now only the Logger is injected
 ```
 
-and as always, 
-we may define the facade class like this:
+### No need to have getFacadeAccessor()
 
+
+#### Before
 ```php
-
-use Imanghafoori\SmartFacades\Facade;
-
-MyFacade extends Facade {
-    protected static function getFacadeAccessor () {
-        return Bar::class;
+MyFacade extends Facade
+{
+    protected static function getFacadeAccessor()
+    {
+        return SomeClass1::class;
     }
 }
 ```
+
+#### After
+```php
+MyFacade extends Facade
+{
+    //
+}
+```
+
+#### shouldProxyTo():
+
+You can choose the low level implementation class which is behind your facade like this :
+
+```php
+MyFacade::shouldProxyTo( SomeClass1::class ); // Within a service provider.
+```
+
+Note : if you invoke it again, it will be overriden:
+```php
+MyFacade::shouldProxyTo( SomeClass1::class );
+MyFacade::shouldProxyTo( SomeClass2::class ); // This wins !!
+```
+
+#### Method Hooks:
+You can introduce some code (like event listeners on eloquent models) before and after a method on a facade is called :
+
+![image](https://user-images.githubusercontent.com/6961695/71644014-c9e3e280-2cd6-11ea-8ebb-38009f6e45cf.png)
