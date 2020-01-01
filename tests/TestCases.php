@@ -39,6 +39,13 @@ class TestCases extends TestCase
             $this->assertEquals($methodName, 'm1');
         });
 
+        FacadeStub::postCall('m*', function ($methodName, $args, $result) use ($obj) {
+            $this->assertIsArray($args);
+            $this->assertEquals($args[0], $obj);
+            $this->assertEquals($result, 'def1');
+            $this->assertEquals($methodName, 'm1');
+        });
+
         $this->assertEquals('def1', FacadeStub::m1($obj));
     }
 
@@ -51,8 +58,10 @@ class TestCases extends TestCase
             $this->assertEquals($methodName, 'm1');
         });
 
-        FacadeStub::postCall('m1', function ($methodName, $args) use ($obj) {
-            $this->assertEquals($args, 'def1');
+        FacadeStub::postCall('m1', function ($methodName, $args, $result) use ($obj) {
+            $this->assertIsArray($args);
+            $this->assertEquals($args[0], $obj);
+            $this->assertEquals($result, 'def1');
             $this->assertEquals($methodName, 'm1');
         });
 

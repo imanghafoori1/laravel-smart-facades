@@ -56,14 +56,14 @@ class Facade extends LaravelFacade
         try {
             event('calling: '. static::class.'@'. $method, [$method, $args]);
             $result =  $instance->$method(...$args);
-            event('called: '. static::class.'@'. $method, [$method, $result]);
+            event('called: '. static::class.'@'. $method, [$method, $args, $result]);
 
             return $result;
         } catch (TypeError $error) {
             $params = (new ReflectionMethod($instance, $method))->getParameters();
             self::addMissingDependencies($params, $args);
             $result = $instance->$method(...$args);
-            event('called: '. static::class.'@'. $method, [$method, $result]);
+            event('called: '. static::class.'@'. $method, [$method, $args, $result]);
 
             return $result;
         }
@@ -95,10 +95,11 @@ class Facade extends LaravelFacade
                 static::$app->call($listener, $methodAndArguments);
             };
         } else {
-            $listener = function ($methodName, $args) use ($listener) {
+            $listener = function ($methodName, $args, $result = null) use ($listener) {
                 static::$app->call($listener, [
                     $methodName,
-                    $args
+                    $args,
+                    $result
                 ]);
             };
         }
