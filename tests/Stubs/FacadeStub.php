@@ -6,5 +6,5 @@ use Imanghafoori\SmartFacades\Facade;
 
 class FacadeStub extends Facade
 {
-
+    //
 }

@@ -8,7 +8,7 @@ use Imanghafoori\FacadeTests\Stubs\{FacadeStub, FacadeStub1, FacadeStub2, Applic
 
 class TestCases extends TestCase
 {
-    public function testDoesNotSwallowInternalTypeErrorOfTheTargetClass()
+    public function test_does_not_swallow_internal_type_error_of_the_target_class()
     {
         try {
             FacadeStub::faulty();
@@ -17,7 +17,7 @@ class TestCases extends TestCase
         }
     }
 
-    public function testItCanInjectForFirstParam()
+    public function test_it_can_inject_for_first_param()
     {
         $this->assertEquals('def1', FacadeStub::m1(new FacadeStub1()));
         $this->assertEquals('def1', FacadeStub::m1());
@@ -30,7 +30,51 @@ class TestCases extends TestCase
         $this->assertEquals('def1'.'def2'.'def3', FacadeStub::m3());
     }
 
-    public function testItCanInjectForSecondParam()
+    public function test_pre_call_wildcard()
+    {
+        $obj = new FacadeStub1();
+        FacadeStub::preCall('m*', function ($methodName, $args) use ($obj) {
+            $this->assertIsArray($args);
+            $this->assertEquals($args[0], $obj);
+            $this->assertEquals($methodName, 'm1');
+        });
+
+        $this->assertEquals('def1', FacadeStub::m1($obj));
+    }
+
+    public function test_pre_call()
+    {
+        $obj = new FacadeStub1();
+        FacadeStub::preCall('m1', function ($methodName, $args) use ($obj) {
+            $this->assertIsArray($args);
+            $this->assertEquals($args[0], $obj);
+            $this->assertEquals($methodName, 'm1');
+        });
+
+        FacadeStub::postCall('m1', function ($methodName, $args) use ($obj) {
+            $this->assertEquals($args, 'def1');
+            $this->assertEquals($methodName, 'm1');
+        });
+
+        $this->assertEquals('def1', FacadeStub::m1($obj));
+    }
+
+    public function test_pre_call_is_not_called()
+    {
+        FacadeStub::preCall('m2', function ($methodName, $args) {
+            $a = $args[0];
+            $a->a = $a->a + 1;
+        });
+        FacadeStub::postCall('m2', function ($methodName, $args) {
+            $a = $args[0];
+            $a->a = $a->a + 1;
+        });
+        $obj = new FacadeStub1(0);
+        $this->assertEquals(0, FacadeStub::m1($obj));
+        $this->assertEquals($obj->a, 0);
+    }
+
+    public function test_it_can_inject_for_second_param()
     {
         $this->assertEquals('abc'.FacadeStub1::class.'def3', FacadeStub::m5('abc'));
         $this->assertEquals('abc'.FacadeStub1::class.'def3', FacadeStub::m5('abc', new FacadeStub1()));
@@ -38,7 +82,7 @@ class TestCases extends TestCase
         $this->assertEquals('bb'.FacadeStub1::class.'cc', FacadeStub::m5('bb', new FacadeStub1, 'cc'));
     }
 
-    public function testItCanInjectTwoDependencies()
+    public function test_it_can_inject_two_dependencies()
     {
         $this->assertEquals('val1'.'def2'.'x_default', FacadeStub::m6(new FacadeStub1('val1'), 'x_'));
         $this->assertEquals('def1'.'val2'.'x_default', FacadeStub::m6(new FacadeStub2('val2'), 'x_'));
@@ -49,7 +93,7 @@ class TestCases extends TestCase
         $this->assertEquals('def1'.'def2'.'x_y', FacadeStub::m6('x_', 'y'));
     }
 
-    public function testItCanInjectTwoDependencies2()
+    public function test_it_can_inject_two_dependencies2()
     {
 
         FacadeStub::setFacadeApplication(app());
