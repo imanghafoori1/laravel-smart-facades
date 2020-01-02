@@ -1,22 +1,37 @@
-# Laravel Smart Facades :
+<h1 align="center">
+🍄 Laravel Smart Facades 🍄
+</h1>
+<h3 align="center">
+This package tries to add some features on the top of the current laravel's facade
+</h3>
 
-### This package tries to add some features on the top of the current laravel's facade
+<p align="center">
+Built with :heart: for every smart laravel developer
 
+</br>
+    
+<a href="https://scrutinizer-ci.com/g/imanghafoori1/laravel-smart-facades"><img src="https://img.shields.io/scrutinizer/g/imanghafoori1/laravel-smart-facades.svg?style=flat-square" alt="Quality Score"></img></a>
 [![Code Quality](https://scrutinizer-ci.com/g/imanghafoori1/laravel-smart-facades/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/imanghafoori1/laravel-smart-facades/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/imanghafoori1/laravel-smart-facades/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/imanghafoori1/laravel-smart-facades/?branch=master)
 [![Build Status](https://travis-ci.org/imanghafoori1/laravel-smart-facades.svg?branch=master)](https://travis-ci.org/imanghafoori1/laravel-smart-facades)
 
-## Installation:
+</p>
+
+
+
+
+
+## :flashlight: Installation:
 
 ```
 composer require imanghafoori/laravel-smart-facades
 ```
 
 
-### No need to have getFacadeAccessor()
+### :wrench: No need to have getFacadeAccessor()
 
 
-#### Before
+#### Before:
 ```php
 use Illuminate\Support\Facades\Facade;
 
@@ -29,7 +44,7 @@ MyFacade extends Facade
 }
 ```
 
-#### After
+#### After:
 ```php
 use Imanghafoori\SmartFacades\Facade;
 
@@ -40,7 +55,7 @@ MyFacade extends Facade
 ```
 
 
-### shouldProxyTo():
+### :wrench: shouldProxyTo():
 
 You can choose the low level implementation class, (so that the facades proxies the method calls to it)
 
@@ -54,25 +69,26 @@ if ($someCondition) {
 }
 ```
 
-Note : if you invoke it twice, it will be override:
+Note : If you invoke it twice, it will override:
 ```php
 MyFacade::shouldProxyTo( SomeClass1::class );
-MyFacade::shouldProxyTo( SomeClass2::class ); // This wins !!
+MyFacade::shouldProxyTo( SomeClass2::class ); // This wins !!!
 ```
 
 
-#### Method Hooks:
-You can introduce some code (like event listeners on eloquent models) "before" and "after" a method call, remotely:
+### :wrench: Method Hooks:
+
+You can introduce some code "before" and "after" a method call, remotely: (like event listeners on eloquent models) 
 
 ![image](https://user-images.githubusercontent.com/6961695/71646327-f100db00-2cfb-11ea-9277-1271395efca0.png)
 
-Here we have told the system even ever the 'findUser' method was called in the system, perform a log.
+Here we have told the system evenever the 'MyFacade::findUser($id)' method was called in the system, perform a log.
 
-### Automatic method injection when calling a method through a facade.
+#### :wrench: Automatic method injection when calling a method through a facade.
 
 This adds ability to enjoy automatic method injection when calling methods on POPOs (Plain Old Php Objects) WITHOUT any performance hit when you do not need it.
 
-Example :
+#### Example:
 ```php
 class Foo { ... }
 
@@ -88,12 +104,12 @@ class Bar
 
 Calling `Bar` through a Facade :
 
-Before : 
+Before:
 ```php
 MyFacade::m1(resolve(Foo::class), resolve(LoggerInterface::class), 'hey there !'); 
 ```
 
-After :
+After:
 ```php
  // This will work and $foo, $logger would be auto-injected for us.
 
@@ -103,3 +119,49 @@ MyFacade::m1('hey there !');          // normal facade
 \Facades\Bar::m1(new Foo('hey man!'), 'hey there !');   //Now only the Logger is injected
 ```
 
+--------------------
+
+### :raising_hand: Contributing 
+If you find an issue, or have a better way to do something, feel free to open an issue or a pull request.
+
+### :star: Your Stars Make Us Do More :star:
+As always if you found this package useful and you want to encourage us to maintain and work on it. Just press the star button to declare your willing.
+
+
+
+## More from the author:
+
+
+###  Laravel middlewarize (new*)
+
+:gem: You can put middleware on any method calls.
+
+- https://github.com/imanghafoori1/laravel-middlewarize
+
+-----------------
+
+### Laravel Widgetize
+
+ :gem: A minimal yet powerful package to give a better structure and caching opportunity for your laravel apps.
+
+- https://github.com/imanghafoori1/laravel-widgetize
+
+
+-----------------
+
+### Laravel Terminator
+
+ :gem: A minimal yet powerful package to give you opportunity to refactor your controllers.
+
+- https://github.com/imanghafoori1/laravel-terminator
+
+
+----------------
+
+<p align="center">
+  
+    It's not I am smarter or something, I just stay with the problems longer.
+    
+    "Albert Einstein"
+    
+</p>
