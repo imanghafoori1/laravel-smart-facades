@@ -21,18 +21,18 @@ class Facade extends LaravelFacade
         static::$app->singleton(self::getFacadeAccessor(), $class);
     }
 
-    public static function preCall(string $method, $listener)
+    public static function preCall($methodName, $listener)
     {
-        $listener = self::makeListener($method, $listener);
+        $listener = self::makeListener($methodName, $listener);
 
-        Event::listen('calling: '. static::class.'@'. $method, $listener);
+        Event::listen('calling: '. static::class.'@'. $methodName, $listener);
     }
 
-    public static function postCall(string $method, $listener)
+    public static function postCall($methodName, $listener)
     {
-        $listener = self::makeListener($method, $listener);
+        $listener = self::makeListener($methodName, $listener);
 
-        Event::listen('called: '. static::class.'@'. $method, $listener);
+        Event::listen('called: '. static::class.'@'. $methodName, $listener);
     }
 
     /**
@@ -54,16 +54,16 @@ class Facade extends LaravelFacade
         }
 
         try {
-            event('calling: '. static::class.'@'. $method, [$method, $args]);
+            Event::dispatch('calling: '. static::class.'@'. $method, [$method, $args]);
             $result =  $instance->$method(...$args);
-            event('called: '. static::class.'@'. $method, [$method, $args, $result]);
+            Event::dispatch('called: '. static::class.'@'. $method, [$method, $args, $result]);
 
             return $result;
         } catch (TypeError $error) {
             $params = (new ReflectionMethod($instance, $method))->getParameters();
             self::addMissingDependencies($params, $args);
             $result = $instance->$method(...$args);
-            event('called: '. static::class.'@'. $method, [$method, $args, $result]);
+            Event::dispatch('called: '. static::class.'@'. $method, [$method, $args, $result]);
 
             return $result;
         }
@@ -91,6 +91,8 @@ class Facade extends LaravelFacade
     private static function makeListener(string $method, $listener)
     {
         if (Str::contains($method, '*')) {
+            // The $_eventName variable is passed to us by laravel
+            // but we do not need it, because we already know it.
             $listener = function ($_eventName, $methodAndArguments) use ($listener) {
                 static::$app->call($listener, $methodAndArguments);
             };
