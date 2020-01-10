@@ -11,7 +11,7 @@ class ConcreteFacadeStub
 
     public function m2(FacadeStub1 $p1, $p2)
     {
-        return $p1->a. $p2;
+        return $p1->a.$p2;
     }
 
     public function m3(FacadeStub1 $p1, $p2 = 'def2', $p3 = 'def3')
@@ -34,7 +34,7 @@ class ConcreteFacadeStub
         return ($p1->a).($p2->b).$p3.$p4;
     }
 
-    public function m7(FacadeStub1 $p1, $p2, $p3 = 'default', FacadeStub2 $p4)
+    public function m7(FacadeStub1 $p1, $p2, $p3, FacadeStub2 $p4)
     {
         return ($p1->a).$p2.$p3.($p4->b);
     }
