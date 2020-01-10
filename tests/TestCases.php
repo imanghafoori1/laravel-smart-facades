@@ -106,7 +106,7 @@ class TestCases extends TestCase
         $this->assertEquals('def1'.'def2'.'x_y', FacadeStub::m6('x_', 'y'));
     }
 
-    public function test_it_can_inject_two_dependencies2()
+    public function _test_it_can_inject_two_dependencies2()
     {
         FacadeStub::setFacadeApplication(app());
         FacadeStub::shouldProxyTo(ConcreteFacadeStub::class);
