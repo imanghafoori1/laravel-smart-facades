@@ -9,7 +9,10 @@ This package tries to add some features on the top of the current laravel's faca
 Built with :heart: for every smart laravel developer
 
 </br>
-    
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href="https://scrutinizer-ci.com/g/imanghafoori1/laravel-smart-facades"><img src="https://img.shields.io/scrutinizer/g/imanghafoori1/laravel-smart-facades.svg?style=flat-square" alt="Quality Score"></img></a>
 [![Code Quality](https://scrutinizer-ci.com/g/imanghafoori1/laravel-smart-facades/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/imanghafoori1/laravel-smart-facades/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/imanghafoori1/laravel-smart-facades/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/imanghafoori1/laravel-smart-facades/?branch=master)
