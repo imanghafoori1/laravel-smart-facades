@@ -32,7 +32,7 @@ composer require imanghafoori/laravel-smart-facades
 ```
 
 
-### :wrench: No need to have getFacadeAccessor()
+### ⚡️ No need to have getFacadeAccessor()
 
 
 #### Before:
@@ -59,13 +59,12 @@ MyFacade extends Facade
 ```
 
 
-### :wrench: shouldProxyTo():
+### ⚡️ shouldProxyTo($class):
 
-You can choose the low level implementation class, (so that the facades proxies the method calls to it)
-
-like this:
+Instead of bind a string to a concrete class with IOC container, You can choose the low level implementation class like this:
 ```php
-   // Normally, within a service provider.
+// Normally, within a service provider.
+
 if ($someCondition) {
     MyFacade::shouldProxyTo( SomeClass::class );
 } else {
@@ -79,8 +78,9 @@ MyFacade::shouldProxyTo( SomeClass1::class );
 MyFacade::shouldProxyTo( SomeClass2::class ); // This wins !!!
 ```
 
+which makes a lot more sense, and is easier to track down.
 
-### :wrench: Method Hooks:
+### ⚡️ Method Hooks:
 
 You can introduce some code "before" and "after" a method call, remotely: (like event listeners on eloquent models) 
 
@@ -92,7 +92,7 @@ Here we have told the system evenever the 'MyFacade::findUser($id)' method was c
 
 This adds ability to enjoy automatic method injection when calling methods on POPOs (Plain Old Php Objects) WITHOUT any performance hit when you do not need it.
 
-#### Example:
+#### 🐙 Example:
 ```php
 class Foo { ... }
 
