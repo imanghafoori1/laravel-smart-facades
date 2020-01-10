@@ -2,9 +2,13 @@
 
 namespace Imanghafoori\FacadeTests;
 
-use TestCase;
 use ArgumentCountError;
-use Imanghafoori\FacadeTests\Stubs\{FacadeStub, FacadeStub1, FacadeStub2, ApplicationStub, ConcreteFacadeStub};
+use Imanghafoori\FacadeTests\Stubs\ApplicationStub;
+use Imanghafoori\FacadeTests\Stubs\ConcreteFacadeStub;
+use Imanghafoori\FacadeTests\Stubs\FacadeStub;
+use Imanghafoori\FacadeTests\Stubs\FacadeStub1;
+use Imanghafoori\FacadeTests\Stubs\FacadeStub2;
+use TestCase;
 
 class TestCases extends TestCase
 {
@@ -104,13 +108,12 @@ class TestCases extends TestCase
 
     public function test_it_can_inject_two_dependencies2()
     {
-
         FacadeStub::setFacadeApplication(app());
         FacadeStub::shouldProxyTo(ConcreteFacadeStub::class);
         $this->assertEquals('def1'.'x_default'.'def2', FacadeStub::m7('x_'));
-        $this->assertEquals('val1'.'x_default'.'def2', FacadeStub::m7(new FacadeStub1('val1'),'x_'));
-        $this->assertEquals('val1'.'x_y'.'def2', FacadeStub::m7(new FacadeStub1('val1'),'x_', 'y'));
-        $this->assertEquals('val1'.'x_y'.'val2', FacadeStub::m7(new FacadeStub1('val1'),'x_', 'y', new FacadeStub2('val2')));
+        $this->assertEquals('val1'.'x_default'.'def2', FacadeStub::m7(new FacadeStub1('val1'), 'x_'));
+        $this->assertEquals('val1'.'x_y'.'def2', FacadeStub::m7(new FacadeStub1('val1'), 'x_', 'y'));
+        $this->assertEquals('val1'.'x_y'.'val2', FacadeStub::m7(new FacadeStub1('val1'), 'x_', 'y', new FacadeStub2('val2')));
     }
 
     public function setUp(): void
@@ -122,7 +125,6 @@ class TestCases extends TestCase
             FacadeStub1::class => new FacadeStub1(),
             FacadeStub2::class => new FacadeStub2(),
         ]);
-
 
         $app = app();
         FacadeStub::setFacadeApplication($app);

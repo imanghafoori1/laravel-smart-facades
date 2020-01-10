@@ -2,12 +2,12 @@
 
 namespace Imanghafoori\SmartFacades;
 
-use TypeError;
-use ReflectionMethod;
-use RuntimeException;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Facade as LaravelFacade;
+use Illuminate\Support\Str;
+use ReflectionMethod;
+use RuntimeException;
+use TypeError;
 
 class Facade extends LaravelFacade
 {
@@ -16,7 +16,7 @@ class Facade extends LaravelFacade
         return static::class;
     }
 
-    static function shouldProxyTo($class)
+    public static function shouldProxyTo($class)
     {
         static::$app->singleton(self::getFacadeAccessor(), $class);
     }
@@ -25,14 +25,14 @@ class Facade extends LaravelFacade
     {
         $listener = self::makeListener($methodName, $listener);
 
-        Event::listen('calling: '. static::class.'@'. $methodName, $listener);
+        Event::listen('calling: '.static::class.'@'.$methodName, $listener);
     }
 
     public static function postCall($methodName, $listener)
     {
         $listener = self::makeListener($methodName, $listener);
 
-        Event::listen('called: '. static::class.'@'. $methodName, $listener);
+        Event::listen('called: '.static::class.'@'.$methodName, $listener);
     }
 
     /**
@@ -54,16 +54,16 @@ class Facade extends LaravelFacade
         }
 
         try {
-            Event::dispatch('calling: '. static::class.'@'. $method, [$method, $args]);
-            $result =  $instance->$method(...$args);
-            Event::dispatch('called: '. static::class.'@'. $method, [$method, $args, $result]);
+            Event::dispatch('calling: '.static::class.'@'.$method, [$method, $args]);
+            $result = $instance->$method(...$args);
+            Event::dispatch('called: '.static::class.'@'.$method, [$method, $args, $result]);
 
             return $result;
         } catch (TypeError $error) {
             $params = (new ReflectionMethod($instance, $method))->getParameters();
             self::addMissingDependencies($params, $args);
             $result = $instance->$method(...$args);
-            Event::dispatch('called: '. static::class.'@'. $method, [$method, $args, $result]);
+            Event::dispatch('called: '.static::class.'@'.$method, [$method, $args, $result]);
 
             return $result;
         }
@@ -101,7 +101,7 @@ class Facade extends LaravelFacade
                 static::$app->call($listener, [
                     $methodName,
                     $args,
-                    $result
+                    $result,
                 ]);
             };
         }
