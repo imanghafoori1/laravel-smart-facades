@@ -93,19 +93,17 @@ class Facade extends LaravelFacade
         if (Str::contains($method, '*')) {
             // The $_eventName variable is passed to us by laravel
             // but we do not need it, because we already know it.
-            $listener = function ($_eventName, $methodAndArguments) use ($listener) {
+            return function ($_eventName, $methodAndArguments) use ($listener) {
                 static::$app->call($listener, $methodAndArguments);
-            };
-        } else {
-            $listener = function ($methodName, $args, $result = null) use ($listener) {
-                static::$app->call($listener, [
-                    $methodName,
-                    $args,
-                    $result,
-                ]);
             };
         }
 
-        return $listener;
+        return function ($methodName, $args, $result = null) use ($listener) {
+            static::$app->call($listener, [
+                $methodName,
+                $args,
+                $result,
+            ]);
+        };
     }
 }
