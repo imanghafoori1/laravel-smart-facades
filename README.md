@@ -1,9 +1,10 @@
 <h1 align="center">
 🍄 Laravel Smart Facades 🍄
 </h1>
-<h3 align="center">
+   <h2 align="center"> 
 Strategy pattern in laravel, made easy
-    
+   </h2> 
+   <h3 align="center"> 
 by adding some features on top of laravel facades.
 </h3>
 
