@@ -11,16 +11,69 @@ use TypeError;
 
 class Facade extends LaravelFacade
 {
+    protected static $tmpDriver = null;
+
+    /**
+     * Get the registered name of the component.
+     *
+     * @return string
+     */
     protected static function getFacadeAccessor()
     {
+        if ($tmp = static::$tmpDriver) {
+            static::$tmpDriver = null;
+            return $tmp;
+        }
+
         return static::class;
     }
 
+    /**
+     * Temporarily changes the driver, only for the next call.
+     *
+     * @param \Closure|string $name
+     *
+     * @return string
+     */
+    public static function changeProxyTo($name)
+    {
+        static::$tmpDriver = $name;
+
+        return static::class;
+    }
+
+    /**
+     * Temporarily changes the driver, only for the next call.
+     *
+     * @param \Closure|string $name
+     *
+     * @return string
+     */
+    public static function withDriver($name)
+    {
+        return static::changeProxyTo($name);
+    }
+
+    /**
+     * Changes the default driver of the facade
+     *
+     * @param \Closure|string $name
+     *
+     * @return string
+     */
     public static function shouldProxyTo($class)
     {
         static::$app->singleton(self::getFacadeAccessor(), $class);
+
+        return static::class;
     }
 
+    /**
+     * Sets up a listener to be invoked before the actual method call
+     *
+     * @param string $methodName
+     * @param \Closure|string $listener
+     */
     public static function preCall($methodName, $listener)
     {
         $listener = self::makeListener($methodName, $listener);
@@ -28,12 +81,19 @@ class Facade extends LaravelFacade
         Event::listen('calling: '.static::class.'@'.$methodName, $listener);
     }
 
+    /**
+     * Sets up a listener to be invoked after the actual method
+     *
+     * @param string $methodName
+     * @param \Closure|string $listener
+     */
     public static function postCall($methodName, $listener)
     {
         $listener = self::makeListener($methodName, $listener);
 
         Event::listen('called: '.static::class.'@'.$methodName, $listener);
     }
+
 
     /**
      * Handle dynamic, static calls to the object.
@@ -47,6 +107,7 @@ class Facade extends LaravelFacade
      */
     public static function __callStatic($method, $args)
     {
+        Event::dispatch('calling: '.static::class.'@'.$method, [$method, $args]);
         $instance = static::getFacadeRoot();
 
         if (! $instance) {
@@ -54,7 +115,6 @@ class Facade extends LaravelFacade
         }
 
         try {
-            Event::dispatch('calling: '.static::class.'@'.$method, [$method, $args]);
             $result = $instance->$method(...$args);
             Event::dispatch('called: '.static::class.'@'.$method, [$method, $args, $result]);
 
