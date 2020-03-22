@@ -2,7 +2,9 @@
 🍄 Laravel Smart Facades 🍄
 </h1>
 <h3 align="center">
-Strategy pattern in laravel, made so easy by adding some features on top of laravel facades.
+Strategy pattern in laravel, made easy
+    
+by adding some features on top of laravel facades.
 </h3>
 
 <p align="center">
