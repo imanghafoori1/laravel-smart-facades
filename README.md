@@ -46,9 +46,9 @@ use Illuminate\Support\Facades\Facade;
 
 MyFacade extends Facade
 {
-    protected static function getFacadeAccessor()
+    protected static function getFacadeAccessor() // <--- normal facade
     {
-        return 'some_key';  // <--- normal facade
+        return 'some_key'; 
     }
 }
 ```
@@ -59,12 +59,12 @@ use Imanghafoori\SmartFacades\Facade;
 
 MyFacade extends Facade
 {
-    //                        <--- smart facade
+    //                                          <--- smart facade
 }
 ```
 
 
-### ⚡️ shouldProxyTo($class):
+### ⚡️ Setting the default driver by `shouldProxyTo($class)`:
 
 Instead of bind a string to a concrete class with IOC container, you can choose the low level implementation class like this:
 ```php
@@ -77,6 +77,7 @@ public function register() {              // <-- within service provider
     }
 }
 ```
+You can proxyTo any abstract string (or closure) bound on the IoC container.
 
 Note : If you invoke it twice, it will override:
 ```php
