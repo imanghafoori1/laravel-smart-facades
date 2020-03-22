@@ -22,6 +22,7 @@ class Facade extends LaravelFacade
     {
         if ($tmp = static::$tmpDriver) {
             static::$tmpDriver = null;
+
             return $tmp;
         }
 
@@ -55,7 +56,7 @@ class Facade extends LaravelFacade
     }
 
     /**
-     * Changes the default driver of the facade
+     * Changes the default driver of the facade.
      *
      * @param \Closure|string $name
      *
@@ -69,7 +70,7 @@ class Facade extends LaravelFacade
     }
 
     /**
-     * Sets up a listener to be invoked before the actual method call
+     * Sets up a listener to be invoked before the actual method call.
      *
      * @param string $methodName
      * @param \Closure|string $listener
@@ -82,7 +83,7 @@ class Facade extends LaravelFacade
     }
 
     /**
-     * Sets up a listener to be invoked after the actual method
+     * Sets up a listener to be invoked after the actual method.
      *
      * @param string $methodName
      * @param \Closure|string $listener
@@ -93,7 +94,6 @@ class Facade extends LaravelFacade
 
         Event::listen('called: '.static::class.'@'.$methodName, $listener);
     }
-
 
     /**
      * Handle dynamic, static calls to the object.
