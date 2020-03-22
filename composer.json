@@ -11,9 +11,9 @@
         }
     ],
     "require": {
-        "php": ">=7.0.0",
-        "illuminate/support":"~5.1|^6.0",
-        "illuminate/events":"~5.1|^6.0"
+        "php": ">=7.1.3",
+        "illuminate/support":"~5.1|^6.0|^7.0",
+        "illuminate/events":"~5.1|^6.0|^7.0"
     },
     "autoload-dev": {
         "classmap": ["tests/TestCase.php"],
