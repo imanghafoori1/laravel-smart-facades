@@ -81,7 +81,7 @@ MyFacade::shouldProxyTo( DriverClass1::class );
 MyFacade::shouldProxyTo( DriverClass2::class ); // <--- This wins !
 ```
 
-### Using Non-default Driver:
+### ⚡️ Using Non-default Driver:
 
 If you want to change the driver at call site:
 ```php
@@ -96,9 +96,9 @@ You can introduce some code "Before" and "after" a method call, remotely: (like 
 
 Here we have told the system evenever the `MyFacade::findUser($id)` method was called in the system, to perform a log.
 
-### Changing the driver, based on parameters value:
+### ⚡️ Choosing the driver, based on parameters value:
 
-For example, lets say you want you facade to use an SMS based driver by default, but if the text is long (more than 150 chars) it smartly should switch to email driver.
+For example, lets say you want your facade to use an SMS based driver by default, but if the text is very long (more than 200 chars) it  should use an email driver.
 
 You can do it like this:
 
