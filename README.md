@@ -2,7 +2,7 @@
 🍄 Laravel Smart Facades 🍄
 </h1>
 <h3 align="center">
-This package tries to add some features on the top of the current laravel's facade
+Strategy pattern in laravel, made so easy by adding some features on top of laravel facades.
 </h3>
 
 <p align="center">
