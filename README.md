@@ -56,29 +56,29 @@ use Imanghafoori\SmartFacades\Facade;
 
 MyFacade extends Facade
 {
-    //             // <--- smart facade
+    //                        <--- smart facade
 }
 ```
 
 
 ### ⚡️ shouldProxyTo($class):
 
-Instead of bind a string to a concrete class with IOC container, You can choose the low level implementation class like this:
+Instead of bind a string to a concrete class with IOC container, you can choose the low level implementation class like this:
 ```php
 
-public function register() {              // <-- service provider
+public function register() {              // <-- within service provider
     if ($someCondition) {
-        MyFacade::shouldProxyTo( SomeClass::class );
+        MyFacade::shouldProxyTo( SomeDriver::class );
     } else {
-        MyFacade::shouldProxyTo( SomeOtherClass::class );
+        MyFacade::shouldProxyTo( SomeOtherDriver::class );
     }
 }
 ```
 
 Note : If you invoke it twice, it will override:
 ```php
-MyFacade::shouldProxyTo( SomeClass1::class );
-MyFacade::shouldProxyTo( SomeClass2::class ); // This wins !!!
+MyFacade::shouldProxyTo( DriverClass1::class );
+MyFacade::shouldProxyTo( DriverClass2::class ); // <--- This wins !
 ```
 
 ### Using Non-default Driver:
