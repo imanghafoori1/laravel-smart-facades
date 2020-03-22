@@ -45,7 +45,7 @@ MyFacade extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'some_key';
+        return 'some_key';  // <--- normal facade
     }
 }
 ```
@@ -56,7 +56,7 @@ use Imanghafoori\SmartFacades\Facade;
 
 MyFacade extends Facade
 {
-    //
+    //             // <--- smart facade
 }
 ```
 
@@ -65,12 +65,13 @@ MyFacade extends Facade
 
 Instead of bind a string to a concrete class with IOC container, You can choose the low level implementation class like this:
 ```php
-// Normally, within a service provider.
 
-if ($someCondition) {
-    MyFacade::shouldProxyTo( SomeClass::class );
-} else {
-    MyFacade::shouldProxyTo( SomeOtherClass::class );
+public function register() {              // <-- service provider
+    if ($someCondition) {
+        MyFacade::shouldProxyTo( SomeClass::class );
+    } else {
+        MyFacade::shouldProxyTo( SomeOtherClass::class );
+    }
 }
 ```
 
@@ -80,19 +81,33 @@ MyFacade::shouldProxyTo( SomeClass1::class );
 MyFacade::shouldProxyTo( SomeClass2::class ); // This wins !!!
 ```
 
-which makes a lot more sense, and is easier to track down.
+### Using Non-default Driver:
+
+If you want to change the driver at call site:
+```php
+MyFacade::withDriver(nonDefaultDriver::class)::myMethod();
+```
 
 ### ⚡️ Method Hooks:
 
-You can introduce some code "before" and "after" a method call, remotely: (like event listeners on eloquent models) 
+You can introduce some code "Before" and "after" a method call, remotely: (like event listeners on eloquent models) 
 
 ![image](https://user-images.githubusercontent.com/6961695/71646327-f100db00-2cfb-11ea-9277-1271395efca0.png)
 
-Here we have told the system evenever the 'MyFacade::findUser($id)' method was called in the system, perform a log.
+Here we have told the system evenever the `MyFacade::findUser($id)` method was called in the system, to perform a log.
+
+### Changing the driver, based on parameters value:
+
+For example, lets say you want you facade to use an SMS based driver by default, but if the text is long (more than 150 chars) it smartly should switch to email driver.
+
+You can do it like this:
+
+![image](https://user-images.githubusercontent.com/6961695/77253047-98dfd200-6c75-11ea-8ab8-b9bf4146dd9f.png)
 
 #### :wrench: Automatic method injection when calling a method through a facade.
 
 This adds ability to enjoy automatic method injection when calling methods on POPOs (Plain Old Php Objects) WITHOUT any performance hit when you do not need it.
+
 
 #### 🐙 Example:
 ```php
