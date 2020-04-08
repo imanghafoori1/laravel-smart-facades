@@ -44,7 +44,7 @@ composer require imanghafoori/laravel-smart-facades
 ```php
 use Illuminate\Support\Facades\Facade;
 
-MyFacade extends Facade
+class MyFacade extends Facade
 {
     protected static function getFacadeAccessor() // <--- normal facade
     {
@@ -57,7 +57,7 @@ MyFacade extends Facade
 ```php
 use Imanghafoori\SmartFacades\Facade;
 
-MyFacade extends Facade
+class MyFacade extends Facade
 {
     //                                          <--- smart facade
 }
