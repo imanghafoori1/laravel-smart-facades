@@ -157,11 +157,11 @@ As always if you found this package useful and you want to encourage us to maint
 ## More from the author:
 
 
-###  Laravel middlewarize (new*)
+###  Laravel Microscope (new*)
 
-:gem: You can put middleware on any method calls.
+:gem: Automatically find bugs before they bite.
 
-- https://github.com/imanghafoori1/laravel-middlewarize
+- https://github.com/imanghafoori1/laravel-microscope
 
 -----------------
 
