@@ -79,7 +79,7 @@ class Facade extends LaravelFacade
     {
         $listener = self::makeListener($methodName, $listener);
 
-        Event::listen('calling: '.static::class.'@'.$methodName, $listener);
+        Event::listen(self::getPreCallEventName($methodName), $listener);
     }
 
     /**
@@ -92,7 +92,7 @@ class Facade extends LaravelFacade
     {
         $listener = self::makeListener($methodName, $listener);
 
-        Event::listen('called: '.static::class.'@'.$methodName, $listener);
+        Event::listen(self::getPostCallEventName($methodName), $listener);
     }
 
     /**
@@ -107,26 +107,22 @@ class Facade extends LaravelFacade
      */
     public static function __callStatic($method, $args)
     {
-        Event::dispatch('calling: '.static::class.'@'.$method, [$method, $args]);
-        $instance = static::getFacadeRoot();
-
-        if (! $instance) {
+        if (! $instance = static::getFacadeRoot()) {
             throw new RuntimeException('A facade root has not been set.');
         }
 
+        Event::dispatch(self::getPreCallEventName($method), [$method, $args]);
+
         try {
             $result = $instance->$method(...$args);
-            Event::dispatch('called: '.static::class.'@'.$method, [$method, $args, $result]);
-
-            return $result;
         } catch (TypeError $error) {
-            $params = (new ReflectionMethod($instance, $method))->getParameters();
-            self::addMissingDependencies($params, $args);
+            self::resolveMissingDependencies($instance, $method, $args);
             $result = $instance->$method(...$args);
-            Event::dispatch('called: '.static::class.'@'.$method, [$method, $args, $result]);
-
-            return $result;
         }
+
+        Event::dispatch(self::getPostCallEventName($method), [$method, $args, $result]);
+
+        return $result;
     }
 
     /**
@@ -165,5 +161,18 @@ class Facade extends LaravelFacade
                 $result,
             ]);
         };
+    }
+
+    private static function getPreCallEventName($methodName) {
+        return 'calling: '.static::class.'@'.$methodName;
+    }
+
+    private static function getPostCallEventName($methodName) {
+        return 'called: '.static::class.'@'.$methodName;
+    }
+
+    private static function resolveMissingDependencies($instance, $method, &$args) {
+        $params = (new ReflectionMethod($instance, $method))->getParameters();
+        self::addMissingDependencies($params, $args);
     }
 }
