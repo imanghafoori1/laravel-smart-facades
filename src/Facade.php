@@ -9,7 +9,8 @@ use ReflectionMethod;
 use RuntimeException;
 use TypeError;
 
-class Facade extends LaravelFacade {
+class Facade extends LaravelFacade
+{
     protected static $tmpDriver = null;
 
     /**
@@ -17,8 +18,9 @@ class Facade extends LaravelFacade {
      *
      * @return string
      */
-    protected static function getFacadeAccessor() {
-        if($tmp = static::$tmpDriver) {
+    protected static function getFacadeAccessor()
+    {
+        if ($tmp = static::$tmpDriver) {
             static::$tmpDriver = null;
 
             return $tmp;
@@ -30,11 +32,12 @@ class Facade extends LaravelFacade {
     /**
      * Temporarily changes the driver, only for the next call.
      *
-     * @param \Closure|string $name
+     * @param  \Closure|string  $name
      *
      * @return string
      */
-    public static function changeProxyTo($name) {
+    public static function changeProxyTo($name)
+    {
         static::$tmpDriver = $name;
 
         return static::class;
@@ -43,22 +46,24 @@ class Facade extends LaravelFacade {
     /**
      * Temporarily changes the driver, only for the next call.
      *
-     * @param \Closure|string $name
+     * @param  \Closure|string  $name
      *
      * @return string
      */
-    public static function withDriver($name) {
+    public static function withDriver($name)
+    {
         return static::changeProxyTo($name);
     }
 
     /**
      * Changes the default driver of the facade.
      *
-     * @param \Closure|string $name
+     * @param  \Closure|string  $name
      *
      * @return string
      */
-    public static function shouldProxyTo($class) {
+    public static function shouldProxyTo($class)
+    {
         static::$app->singleton(self::getFacadeAccessor(), $class);
 
         return static::class;
@@ -67,10 +72,11 @@ class Facade extends LaravelFacade {
     /**
      * Sets up a listener to be invoked before the actual method call.
      *
-     * @param string $methodName
-     * @param \Closure|string $listener
+     * @param  string  $methodName
+     * @param  \Closure|string  $listener
      */
-    public static function preCall($methodName, $listener) {
+    public static function preCall($methodName, $listener)
+    {
         $listener = self::makeListener($methodName, $listener);
 
         Event::listen(self::getPreCallEventName($methodName), $listener);
@@ -79,10 +85,11 @@ class Facade extends LaravelFacade {
     /**
      * Sets up a listener to be invoked after the actual method.
      *
-     * @param string $methodName
-     * @param \Closure|string $listener
+     * @param  string  $methodName
+     * @param  \Closure|string  $listener
      */
-    public static function postCall($methodName, $listener) {
+    public static function postCall($methodName, $listener)
+    {
         $listener = self::makeListener($methodName, $listener);
 
         Event::listen(self::getPostCallEventName($methodName), $listener);
@@ -91,15 +98,16 @@ class Facade extends LaravelFacade {
     /**
      * Handle dynamic, static calls to the object.
      *
-     * @param string $method
-     * @param array $args
+     * @param  string  $method
+     * @param  array  $args
      * @return mixed
      *
      * @throws \RuntimeException
      * @throws \ReflectionException
      */
-    public static function __callStatic($method, $args) {
-        if(!$instance = static::getFacadeRoot()) {
+    public static function __callStatic($method, $args)
+    {
+        if (!$instance = static::getFacadeRoot()) {
             throw new RuntimeException('A facade root has not been set.');
         }
 
@@ -120,23 +128,25 @@ class Facade extends LaravelFacade {
     /**
      * Adds missing dependencies to the user-provided input.
      *
-     * @param ReflectionParameter[] $parameters
-     * @param array $inputData
+     * @param  ReflectionParameter[]  $parameters
+     * @param  array  $inputData
      */
-    private static function addMissingDependencies($parameters, array &$inputData) {
+    private static function addMissingDependencies($parameters, array &$inputData)
+    {
         foreach ($parameters as $i => $parameter) {
             // Injects missing type hinted parameters within the array
             $class = $parameter->getClass()->name ?? false;
-            if($class && !($inputData[$i] ?? false) instanceof $class) {
+            if ($class && !($inputData[$i] ?? false) instanceof $class) {
                 array_splice($inputData, $i, 0, [self::$app[$class]]);
-            } elseif(!array_key_exists($i, $inputData) && $parameter->isDefaultValueAvailable()) {
+            } elseif (!array_key_exists($i, $inputData) && $parameter->isDefaultValueAvailable()) {
                 $inputData[] = $parameter->getDefaultValue();
             }
         }
     }
 
-    private static function makeListener(string $method, $listener) {
-        if(Str::contains($method, '*')) {
+    private static function makeListener(string $method, $listener)
+    {
+        if (Str::contains($method, '*')) {
             // The $_eventName variable is passed to us by laravel
             // but we do not need it, because we already know it.
             return function ($_eventName, $methodAndArguments) use ($listener) {
@@ -146,9 +156,7 @@ class Facade extends LaravelFacade {
 
         return function ($methodName, $args, $result = null) use ($listener) {
             static::$app->call($listener, [
-                $methodName,
-                $args,
-                $result,
+                $methodName, $args, $result,
             ]);
         };
     }
