@@ -120,7 +120,6 @@ class TestCases extends TestCase
 
     public function test_dynamic_proxy_changing_by_with_driver()
     {
-
         $this->assertEquals(ConcreteFacadeStub::class, get_class(FacadeStub::getFacadeRoot()));
 
         FacadeStub::withDriver(ConcreteFacadeStub2::class);
@@ -132,7 +131,6 @@ class TestCases extends TestCase
 
     public function test_dynamic_proxy_changing()
     {
-
         $this->assertEquals(ConcreteFacadeStub::class, get_class(FacadeStub::getFacadeRoot()));
 
         FacadeStub::changeProxyTo(ConcreteFacadeStub2::class);
