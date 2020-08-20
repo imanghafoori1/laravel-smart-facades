@@ -5,6 +5,7 @@ namespace Imanghafoori\FacadeTests;
 use ArgumentCountError;
 use Imanghafoori\FacadeTests\Stubs\ApplicationStub;
 use Imanghafoori\FacadeTests\Stubs\ConcreteFacadeStub;
+use Imanghafoori\FacadeTests\Stubs\ConcreteFacadeStub2;
 use Imanghafoori\FacadeTests\Stubs\FacadeStub;
 use Imanghafoori\FacadeTests\Stubs\FacadeStub1;
 use Imanghafoori\FacadeTests\Stubs\FacadeStub2;
@@ -113,7 +114,34 @@ class TestCases extends TestCase
         $this->assertEquals('def1'.'x_default'.'def2', FacadeStub::m7('x_'));
         $this->assertEquals('val1'.'x_default'.'def2', FacadeStub::m7(new FacadeStub1('val1'), 'x_'));
         $this->assertEquals('val1'.'x_y'.'def2', FacadeStub::m7(new FacadeStub1('val1'), 'x_', 'y'));
-        $this->assertEquals('val1'.'x_y'.'val2', FacadeStub::m7(new FacadeStub1('val1'), 'x_', 'y', new FacadeStub2('val2')));
+        $this->assertEquals('val1'.'x_y'.'val2',
+            FacadeStub::m7(new FacadeStub1('val1'), 'x_', 'y', new FacadeStub2('val2')));
+    }
+
+    public function test_dynamic_proxy_changing_by_with_driver()
+    {
+
+        $this->assertEquals(ConcreteFacadeStub::class, get_class(FacadeStub::getFacadeRoot()));
+
+        FacadeStub::withDriver(ConcreteFacadeStub2::class);
+        $this->assertEquals(ConcreteFacadeStub2::class, get_class(FacadeStub::getFacadeRoot()));
+
+        FacadeStub::withDriver(ConcreteFacadeStub::class);
+        $this->assertEquals(ConcreteFacadeStub::class, get_class(FacadeStub::getFacadeRoot()));
+    }
+
+    public function test_dynamic_proxy_changing()
+    {
+
+        $this->assertEquals(ConcreteFacadeStub::class, get_class(FacadeStub::getFacadeRoot()));
+
+        FacadeStub::changeProxyTo(ConcreteFacadeStub2::class);
+        $this->assertEquals(ConcreteFacadeStub2::class, get_class(FacadeStub::getFacadeRoot()));
+
+        // since changeProxyTo sets a temporary driver, it should get rolled back to the last driver after being retrieved once
+        FacadeStub::m1(new FacadeStub1('val1'));
+
+        $this->assertEquals(ConcreteFacadeStub::class, get_class(FacadeStub::getFacadeRoot()));
     }
 
     public function setUp(): void
