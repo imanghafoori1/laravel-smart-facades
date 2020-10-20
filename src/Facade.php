@@ -160,9 +160,9 @@ class Facade extends LaravelFacade
 
         return function ($methodName, $args, $result = null) use ($listener) {
             static::$app->call($listener, [
-                $methodName,
-                $args,
-                $result,
+                'methodName' => $methodName,
+                'args' => $args,
+                'result' => $result,
             ]);
         };
     }
