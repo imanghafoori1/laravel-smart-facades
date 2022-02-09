@@ -32,8 +32,7 @@ class Facade extends LaravelFacade
     /**
      * Temporarily changes the driver, only for the next call.
      *
-     * @param \Closure|string $name
-     *
+     * @param  \Closure|string  $name
      * @return string
      */
     public static function changeProxyTo($name)
@@ -46,8 +45,7 @@ class Facade extends LaravelFacade
     /**
      * Temporarily changes the driver, only for the next call.
      *
-     * @param \Closure|string $name
-     *
+     * @param  \Closure|string  $name
      * @return string
      */
     public static function withDriver($name)
@@ -58,8 +56,7 @@ class Facade extends LaravelFacade
     /**
      * Changes the default driver of the facade.
      *
-     * @param \Closure|string $name
-     *
+     * @param  \Closure|string  $name
      * @return string
      */
     public static function shouldProxyTo($class)
@@ -72,8 +69,8 @@ class Facade extends LaravelFacade
     /**
      * Sets up a listener to be invoked before the actual method call.
      *
-     * @param string $methodName
-     * @param \Closure|string $listener
+     * @param  string  $methodName
+     * @param  \Closure|string  $listener
      */
     public static function preCall($methodName, $listener)
     {
@@ -85,8 +82,8 @@ class Facade extends LaravelFacade
     /**
      * Sets up a listener to be invoked after the actual method.
      *
-     * @param string $methodName
-     * @param \Closure|string $listener
+     * @param  string  $methodName
+     * @param  \Closure|string  $listener
      */
     public static function postCall($methodName, $listener)
     {
@@ -98,8 +95,8 @@ class Facade extends LaravelFacade
     /**
      * Handle dynamic, static calls to the object.
      *
-     * @param string $method
-     * @param array $args
+     * @param  string  $method
+     * @param  array  $args
      * @return mixed
      *
      * @throws \RuntimeException
@@ -132,8 +129,8 @@ class Facade extends LaravelFacade
     /**
      * Adds missing dependencies to the user-provided input.
      *
-     * @param ReflectionParameter[] $parameters
-     * @param array $inputData
+     * @param  ReflectionParameter[]  $parameters
+     * @param  array  $inputData
      */
     private static function addMissingDependencies($parameters, array &$inputData)
     {
