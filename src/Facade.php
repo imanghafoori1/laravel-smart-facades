@@ -163,4 +163,9 @@ class Facade extends LaravelFacade
             ]);
         };
     }
+
+    public function __call($method, $args)
+    {
+        return static::__callStatic($method, $args);
+    }
 }
