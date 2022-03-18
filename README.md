@@ -127,7 +127,7 @@ class Bar
 }
 ```
 
-Calling `Bar` through a Facade :
+Calling `Bar` through a Facade:
 
 Before:
 ```php
@@ -146,7 +146,7 @@ MyFacade::m1('hey there !');          // normal facade
 
 --------------------
 
-### :raising_hand: Contributing 
+### :raising_hand: Contributing:
 If you find an issue, or have a better way to do something, feel free to open an issue or a pull request.
 
 ### :star: Your Stars Make Us Do More :star:
