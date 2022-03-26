@@ -157,7 +157,7 @@ As always if you found this package useful and you want to encourage us to maint
 ## More from the author:
 
 
-###  Laravel Microscope (new*)
+###  Laravel Microscope
 
 :gem: Automatically find bugs before they bite.
 
