@@ -171,16 +171,6 @@ As always if you found this package useful and you want to encourage us to maint
 
 - https://github.com/imanghafoori1/laravel-widgetize
 
-
------------------
-
-### Laravel Terminator
-
- :gem: A minimal yet powerful package to give you opportunity to refactor your controllers.
-
-- https://github.com/imanghafoori1/laravel-terminator
-
-
 ----------------
 
 <p align="center">
