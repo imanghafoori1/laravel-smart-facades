@@ -12,6 +12,7 @@ use TypeError;
 class Facade extends LaravelFacade
 {
     protected static $tmpDriver = null;
+    protected static $staticDriver = null;
 
     /**
      * Get the registered name of the component.
@@ -26,7 +27,7 @@ class Facade extends LaravelFacade
             return $tmp;
         }
 
-        return static::class;
+        return static::$staticDriver ?? static::class;
     }
 
     /**
@@ -61,6 +62,7 @@ class Facade extends LaravelFacade
      */
     public static function shouldProxyTo($class)
     {
+        static::$staticDriver = $class;
         static::$app->singleton(self::getFacadeAccessor(), $class);
 
         return static::class;
