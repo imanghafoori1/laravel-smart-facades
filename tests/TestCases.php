@@ -9,6 +9,9 @@ use Imanghafoori\FacadeTests\Stubs\ConcreteFacadeStub2;
 use Imanghafoori\FacadeTests\Stubs\FacadeStub;
 use Imanghafoori\FacadeTests\Stubs\FacadeStub1;
 use Imanghafoori\FacadeTests\Stubs\FacadeStub2;
+use Imanghafoori\FacadeTests\Stubs\FooA;
+use Imanghafoori\FacadeTests\Stubs\FooB;
+use Imanghafoori\FacadeTests\Stubs\FooFacadeStub;
 use TestCase;
 
 class TestCases extends TestCase
@@ -52,6 +55,18 @@ class TestCases extends TestCase
         });
 
         $this->assertEquals('def1', FacadeStub::m1($obj));
+    }
+
+    public function test_changing_the_proxy_after_creating_the_object()
+    {
+        FooFacadeStub::shouldProxyTo(FooA::class);
+        $fooA = FooFacadeStub::getFacadeRoot();
+
+        FooFacadeStub::shouldProxyTo(FooB::class);
+        $fooB = FooFacadeStub::getFacadeRoot();
+
+        $this->assertInstanceOf(FooA::class, $fooA);
+        $this->assertInstanceOf(FooB::class, $fooB);
     }
 
     public function test_pre_call()
