@@ -61,6 +61,7 @@ class Facade extends LaravelFacade
      */
     public static function shouldProxyTo($class)
     {
+        self::clearResolvedInstance(self::getFacadeAccessor());
         static::$app->singleton(self::getFacadeAccessor(), $class);
 
         return static::class;

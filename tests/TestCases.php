@@ -96,6 +96,18 @@ class TestCases extends TestCase
         $this->assertEquals('bb'.FacadeStub1::class.'cc', FacadeStub::m5('bb', new FacadeStub1, 'cc'));
     }
 
+    public function test_it_can_switch_after_first_call()
+    {
+        FacadeStub::setFacadeApplication(app());
+        FacadeStub::shouldProxyTo(ConcreteFacadeStub::class);
+        FacadeStub::m1();
+        FacadeStub::shouldProxyTo(ConcreteFacadeStub2::class);
+        $result = FacadeStub::m1();
+        $this->assertEquals('I am stub2', $result);
+
+        $this->assertInstanceOf(ConcreteFacadeStub2::class, FacadeStub::getFacadeRoot());
+    }
+
     public function test_it_can_inject_two_dependencies()
     {
         $this->assertEquals('val1'.'def2'.'x_default', FacadeStub::m6(new FacadeStub1('val1'), 'x_'));
@@ -107,12 +119,10 @@ class TestCases extends TestCase
         $this->assertEquals('def1'.'def2'.'x_y', FacadeStub::m6('x_', 'y'));
     }
 
-    public function _test_it_can_inject_two_dependencies2()
+    public function test_it_can_inject_two_dependencies2()
     {
         FacadeStub::setFacadeApplication(app());
         FacadeStub::shouldProxyTo(ConcreteFacadeStub::class);
-        $this->assertEquals('def1'.'x_default'.'def2', FacadeStub::m7('x_'));
-        $this->assertEquals('val1'.'x_default'.'def2', FacadeStub::m7(new FacadeStub1('val1'), 'x_'));
         $this->assertEquals('val1'.'x_y'.'def2', FacadeStub::m7(new FacadeStub1('val1'), 'x_', 'y'));
         $this->assertEquals('val1'.'x_y'.'val2',
             FacadeStub::m7(new FacadeStub1('val1'), 'x_', 'y', new FacadeStub2('val2')));
