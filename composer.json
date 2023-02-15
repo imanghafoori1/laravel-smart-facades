@@ -1,7 +1,7 @@
 {
     "name": "imanghafoori/laravel-smart-facades",
     "description": "Adds some features on the top of laravel facades",
-    "keywords": ["laravel", "laravel5-package", "PHP", "laravel5", "laravel-facades"],
+    "keywords": ["laravel", "laravel-package", "PHP", "laravel-facades"],
     "license": "MIT",
     "homepage": "https://github.com/imanghafoori1/laravel-smart-facades",
     "authors": [
@@ -24,18 +24,17 @@
     "require-dev": {
         "mockery/mockery": "^1.0",
         "phpunit/phpunit": "~9.0",
-        "orchestra/testbench": "~7.0"
+        "orchestra/testbench": "~7.0|~8.0"
     },
     "autoload": {
         "psr-4": {
             "Imanghafoori\\SmartFacades\\": "src"
         }
     },
-	"suggest": {
+    "suggest": {
         "imanghafoori/laravel-widgetize": "Gives you a better structure and caching opportunity for your web pages.",
-        "imanghafoori/laravel-decorator": "Allows you to easily apply the decorator pattern in a laravel app.",
         "imanghafoori/laravel-anypass": " Allows you login with any password in local environment.",
-		"imanghafoori/laravel-masterpass": "You can easily set a master password without code change.",
+	"imanghafoori/laravel-masterpass": "You can easily set a master password without code change.",
         "imanghafoori/laravel-terminator": "Gives you opportunity to refactor your controllers."
     },
     "scripts": {
