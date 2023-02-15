@@ -69,7 +69,8 @@ class MyFacade extends Facade
 Instead of bind a string to a concrete class with IOC container, you can choose the low level implementation class like this:
 ```php
 
-public function register() {              // <-- within service provider
+public function register()    // <-- in a service provider
+{             
     if ($someCondition) {
         MyFacade::shouldProxyTo( SomeDriver::class );
     } else {
@@ -77,12 +78,13 @@ public function register() {              // <-- within service provider
     }
 }
 ```
+
 You can proxyTo any abstract string (or closure) bound on the IoC container.
 
-Note : If you invoke it twice, it will override:
+Note: If you invoke it twice, it will override:
 ```php
 MyFacade::shouldProxyTo( DriverClass1::class );
-MyFacade::shouldProxyTo( DriverClass2::class ); // <--- This wins !
+MyFacade::shouldProxyTo( DriverClass2::class ); // <--- This wins!
 ```
 
 ### ⚡️ Using Non-default Driver:
@@ -110,7 +112,7 @@ You can do it like this:
 
 #### :wrench: Automatic method injection when calling a method through a facade.
 
-This adds ability to enjoy automatic method injection when calling methods on POPOs (Plain Old Php Objects) WITHOUT any performance hit when you do not need it.
+This the adds ability to enjoy automatic method injection when calling methods on POPOs (Plain Old Php Objects) WITHOUT any performance hit when you do not need it.
 
 
 #### 🐙 Example:
@@ -140,17 +142,17 @@ After:
 
 MyFacade::m1('hey there !');          // normal facade
 
-// or you may want to provide some dependecies your self :
+// or you may want to provide some dependencies yourself:
 \Facades\Bar::m1(new Foo('hey man!'), 'hey there !');   //Now only the Logger is injected
 ```
 
 --------------------
 
 ### :raising_hand: Contributing:
-If you find an issue, or have a better way to do something, feel free to open an issue or a pull request.
+If you find an issue or have a better way to do something, feel free to open an issue or a pull request.
 
 ### :star: Your Stars Make Us Do More :star:
-As always if you found this package useful and you want to encourage us to maintain and work on it. Just press the star button to declare your willing.
+As always if you found this package useful and you want to encourage us to maintain and work on it. Just press the star button to declare your willingness.
 
 
 
