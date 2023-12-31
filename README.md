@@ -23,6 +23,7 @@ Built with :heart: for every smart laravel developer
 [![Code Quality](https://scrutinizer-ci.com/g/imanghafoori1/laravel-smart-facades/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/imanghafoori1/laravel-smart-facades/?branch=master)
 [![Build Status](https://travis-ci.org/imanghafoori1/laravel-smart-facades.svg?branch=master)](https://travis-ci.org/imanghafoori1/laravel-smart-facades)
 [![Software License](https://img.shields.io/badge/license-MIT-blue.svg?style=round-square)](LICENSE.md)
+[![Check Imports](https://github.com/imanghafoori1/laravel-smart-facades/actions/workflows/check_import.yml/badge.svg?branch=master)](https://github.com/imanghafoori1/laravel-smart-facades/actions/workflows/check_import.yml)
 [![StyleCI](https://github.styleci.io/repos/166631643/shield?branch=master)](https://github.styleci.io/repos/166631643)
 </p>
 
