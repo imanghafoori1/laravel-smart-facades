@@ -30,4 +30,4 @@ jobs:
         run: composer global require imanghafoori/php-imports-analyzer --prefer-dist --no-progress
 
       - name: Check Imports
-        run: check_imports
+        run: /tmp/vendor/bin:check_imports
