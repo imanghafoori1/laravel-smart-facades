@@ -2,14 +2,14 @@
 🍄 Laravel Smart Facades 🍄
 </h1>
    <h2 align="center"> 
-Strategy pattern in laravel, made easy
+The "Strategy pattern" in Laravel, made easy
    </h2> 
    <h3 align="center"> 
-by adding some features on top of laravel facades.
+by adding some features on top of Laravel facades.
 </h3>
 
 <p align="center">
-Built with :heart: for every smart laravel developer
+Built with :heart: for every smart Laravel developer
 
 </br>
 
@@ -21,14 +21,10 @@ Built with :heart: for every smart laravel developer
 &nbsp;&nbsp;
 <a href="https://scrutinizer-ci.com/g/imanghafoori1/laravel-smart-facades"><img src="https://img.shields.io/scrutinizer/g/imanghafoori1/laravel-smart-facades.svg?style=flat-square" alt="Quality Score"></img></a>
 [![Code Quality](https://scrutinizer-ci.com/g/imanghafoori1/laravel-smart-facades/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/imanghafoori1/laravel-smart-facades/?branch=master)
-[![Build Status](https://travis-ci.org/imanghafoori1/laravel-smart-facades.svg?branch=master)](https://travis-ci.org/imanghafoori1/laravel-smart-facades)
 [![Software License](https://img.shields.io/badge/license-MIT-blue.svg?style=round-square)](LICENSE.md)
-[![Check Imports](https://github.com/imanghafoori1/laravel-smart-facades/actions/workflows/check_import.yml/badge.svg?branch=master)](https://github.com/imanghafoori1/laravel-smart-facades/actions/workflows/check_import.yml)
+[![Check Imports](https://github.com/imanghafoori1/laravel-smart-facades/actions/workflows/check_imports.yml/badge.svg?branch=master)](https://github.com/imanghafoori1/laravel-smart-facades/actions/workflows/check_imports.yml)
 [![StyleCI](https://github.styleci.io/repos/166631643/shield?branch=master)](https://github.styleci.io/repos/166631643)
 </p>
-
-
-
 
 
 ## :flashlight: Installation:
@@ -67,7 +63,7 @@ class MyFacade extends Facade
 
 ### ⚡️ Setting the default driver by `shouldProxyTo($class)`:
 
-Instead of bind a string to a concrete class with IOC container, you can choose the low level implementation class like this:
+Instead of binding a string to a concrete class with an IOC container, you can choose the low-level implementation class like this:
 ```php
 
 public function register()    // <-- in a service provider
@@ -80,7 +76,7 @@ public function register()    // <-- in a service provider
 }
 ```
 
-You can proxyTo any abstract string (or closure) bound on the IoC container.
+You can proxy to any abstract string (or closure) bound on the IoC container.
 
 Note: If you invoke it twice, it will override:
 ```php
@@ -105,7 +101,7 @@ Here we have told the system evenever the `MyFacade::findUser($id)` method was c
 
 ### ⚡️ Choosing the driver, based on parameters value:
 
-For example, lets say you want your facade to use an SMS based driver by default, but if the text is very long (more than 200 chars) it  should use an email driver.
+For example, let's say you want your facade to use an SMS-based driver by default, but if the text is very long (more than 200 chars) it  should use an email driver.
 
 You can do it like this:
 
@@ -170,7 +166,7 @@ As always if you found this package useful and you want to encourage us to maint
 
 ### Laravel Widgetize
 
- :gem: A minimal yet powerful package to give a better structure and caching opportunity for your laravel apps.
+ :gem: A minimal yet powerful package to give a better structure and caching opportunity for your Laravel apps.
 
 - https://github.com/imanghafoori1/laravel-widgetize
 
