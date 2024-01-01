@@ -57,13 +57,13 @@ class Facade extends LaravelFacade
     /**
      * Changes the default driver of the facade.
      *
-     * @param  \Closure|string  $name
+     * @param  \Closure|string  $class
      * @return string
      */
     public static function shouldProxyTo($class)
     {
         self::clearResolvedInstance(self::getFacadeAccessor());
-        static::$app->singleton(self::getFacadeAccessor(), $class);
+        (static::$app)->singleton(self::getFacadeAccessor(), $class);
 
         return static::class;
     }
@@ -147,7 +147,12 @@ class Facade extends LaravelFacade
         }
     }
 
-    private static function makeListener(string $method, $listener)
+    /**
+     * @param  string  $method
+     * @param  \Closure|string  $listener
+     * @return \Closure
+     */
+    private static function makeListener($method, $listener)
     {
         if (Str::contains($method, '*')) {
             // The $_eventName variable is passed to us by laravel
