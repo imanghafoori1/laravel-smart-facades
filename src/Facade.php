@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Facade as LaravelFacade;
 use Illuminate\Support\Str;
 use ReflectionMethod;
+use ReflectionParameter;
 use RuntimeException;
 use TypeError;
 
