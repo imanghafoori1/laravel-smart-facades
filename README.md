@@ -97,7 +97,7 @@ You can introduce some code "Before" and "after" a method call, remotely: (like 
 
 ![image](https://user-images.githubusercontent.com/6961695/71646327-f100db00-2cfb-11ea-9277-1271395efca0.png)
 
-Here we have told the system evenever the `MyFacade::findUser($id)` method was called in the system, to perform a log.
+Here we have told the system whenever the `MyFacade::findUser($id)` method was called in the system, to perform a log.
 
 ### ⚡️ Choosing the driver, based on parameters value:
 
